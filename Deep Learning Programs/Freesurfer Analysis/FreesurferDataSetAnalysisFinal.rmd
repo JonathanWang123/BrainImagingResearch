@@ -1,0 +1,151 @@
+---
+title: "Freesurfer Data Set Analysis"
+author: "Jonathan Wang, David Wang, Justin Chen"
+date: "3/11/2020"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## R Markdown
+
+For our research, our group analyzed the WU-Minn HCP Dataset of 1200 subjects from the Human Connectome Database. The segments of the dataset our group used were the Expanded FreeSurfer Data and Behavioral Data which stores the values of several variables regarding the patients' brain MRI scans. Our goal was to utilize the concept of data depth on the dataset so our group could find the deepest points and as a result, the most representative subjects in the group. However, since simply finding the deepest point of the entire set is not useful, our group also chose to split the data by groups like age range and gender to try and find differences among those groups. Finally, after splitting the data set into different demographics, our group performed depth based calculations by finding the modified band depth using the depthTools package in R on specific groups of variables. One study will be on brain segment thickness, another on brain segment surface area, and the final on brain segment gray matter volume.
+
+First, the depthTools library along with the two data sets are imported: Expanded Freesurfer and Behavioral. 
+
+## Import Data and Libraries
+NOTE: Change filepath to wherever you have the datasets stored or import the data sets separately named "behavioral" and "freesurfer".
+```{r initialize}
+library(depthTools)
+
+freesurfer <- read.csv("~/Desktop/Research/HCPDataDepth/unrestricted_hcp_freesurfer.csv")
+behavioral <- read.csv("~/Desktop/Research/HCPDataDepth/unrestricted_davidwangmo_3_5_2020_8_34_42.csv")
+```
+
+## Split into groups
+
+Our group mainly chose to separate the data by two possible paramaters: age and gender. Our group took the datasets and copied their split versions into newly created sub datasets.
+
+Gender (Split by the value of the Gender variable):
+```{r splitGender}
+freesurferGendered <- split(freesurfer,freesurfer$Gender)
+```
+
+Age Group (Merge Expanded FreeSurfer and Behavioral dataset [age variable is stored in behavioral while the other variables are in FreeSurfer]. Then split the subjects by their corresponding age groups variable):
+```{r splitAge}
+mergeData <- merge(freesurfer, behavioral, by = "Subject")
+ageCol <- grep("Age$", names(mergeData))
+#move age column to column 3
+mergeData <- mergeData[, c(c(1:2), ageCol, (1:ncol(mergeData))[-ageCol])]
+
+behavioralAge <- split(mergeData, mergeData$Age)
+```
+
+After the datasets are split by gender/age, our group reduced the set of variables per subject (since our group is performing analyses on specific variables).
+
+Split the gender dataset into thickness, surface area, and gray matter volume subsets (Used the grep function to select subsections of the original dataset limited to variables only containing desired strings):
+
+```{r splitVariablesGender}
+thicknessM <- freesurferGendered$M[, grep("_Thck$" , colnames(freesurfer))]
+areaM <- freesurferGendered$M[, grep("_Area", colnames(freesurfer))]
+grayVolM <- freesurferGendered$M[, grep("_GrayVol", colnames(freesurfer))]
+
+thicknessF <- freesurferGendered$F[, grep("_Thck$" , colnames(freesurfer))]
+areaF <- freesurferGendered$F[, grep("_Area", colnames(freesurfer))]
+grayVolF <- freesurferGendered$F[, grep("_GrayVol", colnames(freesurfer))]
+```
+
+Split the age dataset into thickness, surface area, and gray matter volume subsets("+3" added to account for shift of column numbers after merging):
+```{r splitVariablesAge}
+thickness22 <- behavioralAge$`22-25`[, grep("_Thck$" , colnames(freesurfer))+3]
+area22 <- behavioralAge$`22-25`[, grep("_Area" , colnames(freesurfer))+3]
+grayVol22 <- behavioralAge$`22-25`[, grep("_GrayVol" , colnames(freesurfer))+3]
+
+thickness26 <- behavioralAge$`26-30`[, grep("_Thck$" , colnames(freesurfer))+3]
+area26 <- behavioralAge$`26-30`[, grep("_Area" , colnames(freesurfer))+3]
+grayVol26 <- behavioralAge$`26-30`[, grep("_GrayVol" , colnames(freesurfer))+3]
+
+thickness31 <- behavioralAge$`31-35`[, grep("_Thck$" , colnames(freesurfer))+3]
+area31 <- behavioralAge$`31-35`[, grep("_Area" , colnames(freesurfer))+3]
+grayVol31 <- behavioralAge$`31-35`[, grep("_GrayVol" , colnames(freesurfer))+3]
+
+thickness36 <- behavioralAge$`36+`[, grep("_Thck$" , colnames(freesurfer))+3]
+area36 <- behavioralAge$`36+`[, grep("_Area" , colnames(freesurfer))+3]
+grayVol36 <- behavioralAge$`36+`[, grep("_GrayVol" , colnames(freesurfer))+3]
+```
+
+Then, plot the depth graphs of these subsets and store the returned values into variables containing both the order and depth value vectors. Use the plots to compare gender and age group plots.
+
+Cortical thickness plots by gender:
+```{r thicknessGraphsGender}
+thicknessM_ordering <- MBD(thicknessM, main="Male Thickness Depth")
+thicknessF_ordering <- MBD(thicknessF, main="Female Thickness Depth")
+```
+
+Surface area plots by gender:
+```{r areaGraphsGender}
+areaM_ordering <- MBD(areaM, main="Male Area Depth")
+areaF_ordering <- MBD(areaF, main="Female Area Depth")
+```
+
+Gray matter volume plots by gender:
+```{r grayVolGraphsGender}
+grayVolM_ordering <- MBD(grayVolM, main="Male Gray Matter Volume Depth")
+grayVolF_ordering <- MBD(grayVolF, main="Female Gray Matter Volume Depth")
+```
+
+Cortical thickness plots by age group:
+```{r thicknessGraphsAge}
+thickness22_ordering <- MBD(thickness22, main="Ages 22-25 Thickness Depth")
+thickness26_ordering <- MBD(thickness26, main="Ages 26-30 Thickness Depth")
+thickness31_ordering <- MBD(thickness31, main="Ages 31-35 Thickness Depth")
+thickness36_ordering <- MBD(thickness36, main="Ages 36+ Thickness Depth")
+```
+
+Surface area plots by age group:
+```{r areaGraphsAge}
+area22_ordering <- MBD(area22, main="Ages 22-25 Area Depth")
+area26_ordering <- MBD(area26, main="Ages 26-30 Area Depth")
+area31_ordering <- MBD(area31, main="Ages 31-35 Area Depth")
+area36_ordering <- MBD(area36, main="Ages 36+ Area Depth")
+```
+
+Gray matter volume plots by age group:
+```{r grayVolGraphsAge}
+grayVol22_ordering <- MBD(grayVol22, main="Ages 22-25 Gray Matter Depth")
+grayVol26_ordering <- MBD(grayVol26, main="Ages 26-30 Gray Matter Depth")
+grayVol31_ordering <- MBD(grayVol31, main="Ages 31-35 Gray Matter Depth")
+grayVol36_ordering <- MBD(grayVol36, main="Ages 36+ Gray Matter Depth")
+```
+
+Additionally, since the MBD data is stored, our group can access the ordering of the subjects and find the deepest and, therefore, the most representative subject.
+
+```{r mostRepresentative, echo = FALSE}
+cat("The most representative male for thickness is subject number",freesurferGendered$M$Subject[thicknessM_ordering$ordering[1]],"\n")
+cat("The most representative female for thickness is subject number",freesurferGendered$F$Subject[thicknessF_ordering$ordering[1]],"\n")
+cat("The most representative male for area is subject number",freesurferGendered$M$Subject[areaM_ordering$ordering[1]],"\n")
+cat("The most representative female for area is subject number",freesurferGendered$F$Subject[areaF_ordering$ordering[1]],"\n")
+cat("The most representative male for gray matter volume is subject number",freesurferGendered$M$Subject[grayVolM_ordering$ordering[1]],"\n")
+cat("The most representative female for gray matter volume is subject number",freesurferGendered$F$Subject[grayVolF_ordering$ordering[1]],"\n")
+
+cat("The most representative 22-25 year old for thickness is subject number",behavioralAge$`22-25`$Subject[thickness22_ordering$ordering[1]],"\n")
+cat("The most representative 26-30 year old for thickness is subject number",behavioralAge$`26-30`$Subject[thickness26_ordering$ordering[1]],"\n")
+cat("The most representative 31-35 year old for thickness is subject number",behavioralAge$`31-35`$Subject[thickness31_ordering$ordering[1]],"\n")
+cat("The most representative 36+ year old for thickness is subject number",behavioralAge$`36+`$Subject[thickness36_ordering$ordering[1]],"\n")
+
+cat("The most representative 22-25 year old for area is subject number",behavioralAge$`22-25`$Subject[area22_ordering$ordering[1]],"\n")
+cat("The most representative 26-30 year old for area is subject number",behavioralAge$`26-30`$Subject[area26_ordering$ordering[1]],"\n")
+cat("The most representative 31-35 year old for area is subject number",behavioralAge$`31-35`$Subject[area31_ordering$ordering[1]],"\n")
+cat("The most representative 36+ year old for area is subject number",behavioralAge$`36+`$Subject[area36_ordering$ordering[1]],"\n")
+
+cat("The most representative 22-25 year old for gray matter volume is subject number",behavioralAge$`22-25`$Subject[grayVol22_ordering$ordering[1]],"\n")
+cat("The most representative 26-30 year old for gray matter volume is subject number",behavioralAge$`26-30`$Subject[grayVol26_ordering$ordering[1]],"\n")
+cat("The most representative 31-35 year old for gray matter volume is subject number",behavioralAge$`31-35`$Subject[grayVol31_ordering$ordering[1]],"\n")
+cat("The most representative 36+ year old for gray matter volume is subject number",behavioralAge$`36+`$Subject[grayVol36_ordering$ordering[1]],"\n")
+```
+
+```{r combineOrder}
+male.order<- cbind(thicknessM_ordering$ordering, areaM_ordering$ordering,grayVolM_ordering$ordering)
+```
