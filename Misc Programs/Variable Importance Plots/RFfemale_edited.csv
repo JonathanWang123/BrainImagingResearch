@@ -1,0 +1,84 @@
+Category,Variable,MeanDecreaseGini
+Psychiatric and Life Function,ASR_Anxd_Raw,0.051905908
+Psychiatric and Life Function,ASR_Witd_Raw,0.024746403
+Psychiatric and Life Function,ASR_Soma_Raw,0.044403898
+Psychiatric and Life Function,ASR_Attn_Raw,0.039252606
+Psychiatric and Life Function,ASR_Aggr_Raw,0.014253224
+Psychiatric and Life Function,ASR_Rule_Raw,12.96323213
+Psychiatric and Life Function,ASR_Intr_Raw,0
+Psychiatric and Life Function,ASR_Oth_Raw,0.362197445
+Psychiatric and Life Function,ASR_Crit_Raw,0.023414454
+Psychiatric and Life Function,ASR_Intn_Raw,0.139538157
+Psychiatric and Life Function,ASR_Extn_Raw,0.094112765
+Psychiatric and Life Function,DSM_Depr_Raw,0.121134417
+Psychiatric and Life Function,DSM_Anxi_Raw,0.052565298
+Psychiatric and Life Function,DSM_Somp_Raw,0.003686636
+Psychiatric and Life Function,DSM_Avoid_Raw,0.212420595
+Psychiatric and Life Function,DSM_Adh_Raw,0.087114218
+Psychiatric and Life Function,DSM_Inat_Raw,0.010702252
+Psychiatric and Life Function,DSM_Hype_Raw,0.049656044
+Psychiatric and Life Function,DSM_Antis_Raw,0.005711567
+Cognition,PicSeq_AgeAdj,0.182130547
+Cognition,CardSort_AgeAdj,2.888576481
+Cognition,Flanker_AgeAdj,1.694439823
+Cognition,PMAT24_A_CR,0.091870434
+Cognition,PMAT24_A_SI,0.026912694
+Cognition,PMAT24_A_RTCR,1.972412858
+Cognition,ReadEng_AgeAdj,1.375121442
+Cognition,PicVocab_AgeAdj,0.22249782
+Cognition,ProcSpeed_AgeAdj,0.986481409
+Cognition,DDisc_AUC_200,2.320567184
+Cognition,DDisc_AUC_40K,0.759933318
+Cognition,VSPLOT_TC,0.31663722
+Cognition,VSPLOT_CRTE,8.014396761
+Cognition,VSPLOT_OFF,0.906115623
+Cognition,SCPT_TP,0
+Cognition,SCPT_TN,0.052818079
+Cognition,SCPT_FP,0.034628149
+Cognition,SCPT_FN,0.006666667
+Cognition,SCPT_TPRT,1.828639215
+Cognition,SCPT_SEN,0.0064
+Cognition,SCPT_SPEC,0.143393799
+Cognition,SCPT_LRNR,0.031325707
+Cognition,IWRD_TOT,0.983957925
+Cognition,IWRD_RTC,0.626402575
+Cognition,ListSort_AgeAdj,0.113765739
+Cognition,CogFluidComp_AgeAdj,6.412889416
+Cognition,CogEarlyComp_AgeAdj,0.829203537
+Cognition,CogTotalComp_AgeAdj,0.475353899
+Cognition,CogCrystalComp_AgeAdj,0.759728136
+Emotion,ER40_CR,0.294725582
+Emotion,ER40_CRT,1.741919537
+Emotion,ER40ANG,0
+Emotion,ER40FEAR,0.015623573
+Emotion,ER40HAP,0
+Emotion,ER40NOE,0
+Emotion,ER40SAD,0
+Emotion,AngAffect_Unadj,0.578324762
+Emotion,AngHostil_Unadj,0.359439413
+Emotion,AngAggr_Unadj,0.027409084
+Emotion,FearAffect_Unadj,0.26704057
+Emotion,FearSomat_Unadj,1.200920909
+Emotion,Sadness_Unadj,3.473306995
+Emotion,LifeSatisf_Unadj,0.455477476
+Emotion,MeanPurp_Unadj,1.011758386
+Emotion,PosAffect_Unadj,0.313573042
+Emotion,Friendship_Unadj,6.843713285
+Emotion,Loneliness_Unadj,0.258748908
+Emotion,PercHostil_Unadj,2.079391999
+Emotion,PercReject_Unadj,0.036505422
+Emotion,EmotSupp_Unadj,0.051945587
+Emotion,InstruSupp_Unadj,0.161229255
+Emotion,PercStress_Unadj,0.837780477
+Emotion,SelfEff_Unadj,1.151641972
+Motor,Endurance_AgeAdj,0.533626825
+Motor,Dexterity_AgeAdj,0.2914546
+Motor,Strength_AgeAdj,1.279946473
+Personality,NEOFAC_A,0.202151302
+Personality,NEOFAC_O,4.015930784
+Personality,NEOFAC_C,0.263100374
+Personality,NEOFAC_N,0.124968683
+Personality,NEOFAC_E,3.255768602
+Sensory,Odor_AgeAdj,0.199379255
+Sensory,PainInterf_Tscore,0.017155068
+Sensory,Taste_AgeAdj,0.713073005
